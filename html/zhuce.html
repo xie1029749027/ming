@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../css/base1.css" />
+        <link rel="stylesheet" type="text/css" href="../css/zhuce.css" />
+        <script src="../js/common.js"type="text/javascript"></script>
+        <script src="../js/jquery-1.10.1.min.js"type="text/javascript"></script>
+        <script src="../js/zhuce.js"></script>
+         
+    </head>
+    <body>
+
+
+    <header>      
+        <div class="header con">
+            <ul class="header_left fl">
+                <li><a href="#">波奇网</a></li>
+                <li><a href="#">波奇商场</a></li>
+                <li><a href="#">波奇服务</a></li>
+                <li><a href="#">波奇论坛</a></li>
+                <li><a href="#">宠物百科</a></li>
+            </ul>
+            <ul class="header_right fr">
+                <li id="denglu1"><a href="#">登录</a></li>
+                <li id="zhuce1"><a href="#">注册</a></li>
+                <li><a href="#"><i class="weibo"></i>微博</a></li>
+                <li><a href="#"><i class="weixin"></i>微信</a></li>
+                <li><a href="#"><i class="tel"></i>手机版</a></li>
+            </ul>
+        </div>
+    </header>
+        <main>
+            <div class="main con">
+                <div class="main_top con">
+                    <a href="#"><img src="../img/zhuche_logo.png" height="88" width="190" alt="" /></a>
+                <h1>
+                    用户注册
+                </h1>
+                <div class="has_number">已有波奇帐号，<a href="#">
+                <!-- 登录界面 -->
+                直接登录</a></div>
+                </div>          
+                <div class="reg con">
+                    <div class="reg_left fl">
+                       <div class="reg_left_top fl">
+                                <i class="tellphone"></i>手机注册;                        </div>
+                        
+                            <form  class="reg_left_body"action="#">
+                            <div class="forget_list">
+                                    <span>手机号码：</span>
+                                    <div class="yzm tell"><input id="mobile"type="text" placeholder="请输入手机号码"/>
+                                    </div>
+                                <div class="k_em">
+                                    <div id="mobile_tip">
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="forget_list">
+                                <span>设置密码：</span>
+                                        <div class="yzm tell"><input id="psw"type="password" placeholder="6-20大小写英文字母、数字或符号"/>
+                                        </div>
+                                    <div class="k_em">
+                                        <div id="password_tip" >
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="forget_list">
+                                <span>确认密码：</span>
+                                        <div class="yzm tell">
+                                        <input id="re_psw"type="password" placeholder="请再次输入密码"/>
+                                        </div>
+                                <div class="k_em">
+                                    <div id="repassword_tip" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="forget_list">
+                                <span>昵称：</span>
+                                        <div class="yzm tell"><input id="uid"type="text" placeholder="请输入昵称"/>
+                                        </div>
+                                    <div class="k_em">
+                                        <div id="nickname_tip" >
+                                        </div>
+                                    </div>
+                            </div>    
+
+                            <div class="forget_list">
+                                <span>验证码：</span>
+                                        <div class="yzm tell">
+                                        <input id="yzm"style="width:80px;"type="text"/>
+                                        <div class="k_em" >
+                                            <div id="m_verify_tip">
+                                                
+                                            </div>
+                                         </div>
+                                        </div>  
+
+                                    <span style="width:120px;padding:0 10px;"><canvas id="canvas" width="100" height="30"></canvas></span>
+
+                                <div id="update"><a href="javascript:;">看不清？换一张</a></div>
+                                    
+                            </div>    
+
+                            <div class="forget_list">
+                                <span>短信验证码：</span>
+                                        <div class="yzm tell"><input id="duanxin"style="width:80px;"type="text"/>
+                                        <div class="k_em" >
+                                            <div id="    m_verify_tip">
+                                            </div>
+                                         </div>
+                                        </div>  
+                                <input type="button" value="获取短信验证码" id="message" />
+                                
+                            </div> 
+                            <div class="forget_list">
+                                <span></span>
+                                <label class="agree fl">
+                                    <input id="m_checkbox"type="checkbox" name="checkname" style="margin-right:3px;"/>我已阅读并同意
+                                
+                                <a target="_blank" style="color:#3366cc;" href="http://www.boqii.com/user/regagreement">《波奇网服务协议》</a>
+                                </label>
+                                </div>
+
+                                <div class="forget_list">
+                                    <span></span>
+                                    <a id="register" href="javascript:;">
+                                        注册
+                                    </a>
+                                </div>
+                                <div class="forget_list">
+                                    <span></span>
+                                </div>
+                            </form>
+                       
+                    </div>
+                    <div class="main_right fr">
+                       <a href="###"><img src="../img/banr.png" height="519" width="181" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div id="footer">
+            <!-- 底部 -->
+            <div class="footer con">
+        
+                <div class="footer_bot">
+                <p class="link">
+                    <a href="http://www.boqii.com/about.html" target="_blank">关于波奇</a><span>|</span>
+                    <a href="http://www.boqii.com/link.html" target="_blank">友情链接</a><span>|</span>
+                    <a href="http://www.boqii.com/joinus.html" target="_blank">诚聘英才</a><span>|</span>
+                    <a href="http://www.boqii.com/contact.html" target="_blank">联系我们</a><span>|</span>
+                    <a href="http://www.boqii.com/sitemap.html" target="_blank">网站地图</a><span>|</span>
+                    <a href="http://www.boqii.com/complaints.html" target="_blank">意见反馈</a><span>|</span>
+                    <a href="http://www.boqii.com/help.html" target="_blank">帮助中心</a><span>|</span>客服热线：400-820-6098
+                </p>
+                <p>
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011502004955"><img style="margin: 0 0 0 0;" src="http://b.boqiicdn.com/v2/images/icons/beian.png" alt=""> 沪公网安备 31011502004955号</a> <span>|</span>
+                    <a target="_blank" href="http://www.miibeian.gov.cn/">沪ICP备13034501号-2</a> <span>|</span>
+                    &nbsp;增值电信业务经营许可证：
+                    <a target="_blank" href="http://www.miibeian.gov.cn/">沪B2-20140120</a>
+                </p>
+                <p class="copy">
+                    Copyright © 2007-2019 Boqii.com All Rights Reserved 光橙（上海）信息科技有限公司 版权所有 
+                    
+                </p>
+                <p class="copy">               公司地址：上海市浦东新区盛夏路399号亚芯科技园1号楼6楼<span>|</span>公司电话：021-61096226 
+                
+            </p>
+                <p>
+                    <a rel="nofollow" target="_blank" href="http://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&amp;entyId=20131022163114962"><img src="http://b.boqiicdn.com/v2/images/foot_gs.png" width="100" height="35"></a>
+                    <a rel="nofollow" target="_blank" href="http://www.boqii.com/ads.php"><img src="http://b.boqiicdn.com/v2/images/foot_cx.png" width="100" height="35"></a>
+                    <a rel="nofollow" target="_blank" href="https://ss.knet.cn/verifyseal.dll?sn=e14111831011556282oicb000000&amp;ct=df&amp;a=1&amp;pa=0.1636424780320953"><img src="http://b.boqiicdn.com/v2/images/foot_kx.png" width="100" height="35"></a>
+                    <a rel="nofollow" target="_blank" href="http://www.zx110.org/"><img src="http://b.boqiicdn.com/v2/images/foot_zx.png" width="100" height="35"></a>
+                </p>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>
