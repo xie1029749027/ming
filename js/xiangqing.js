@@ -2,24 +2,14 @@
 * @Author: Marte
 * @Date:   2019-05-18 12:50:23
 * @Last Modified by:   Marte
-* @Last Modified time: 2019-05-19 23:12:40
+* @Last Modified time: 2019-05-20 19:41:39
 */
 window.onload=function(){
      var dls1 = document.getElementsByClassName("dls1");
 
     dls1[0].style.background = "#e53";
 
-    var denglu1 = document.getElementById('denglu');
-    denglu1.onclick =function(){
-        location.href = 'html/denglu.html';
-    }
-    var zhuce1 = document.getElementById('zhuce');
-    zhuce1.onclick =function(){
-        $('#zhuce').click(function(){
-            location.href = 'html/zhuce.html';
-        })
-        
-    }
+    
    
     var tz  = document.querySelector('.nav_center');
     var l1 = tz.getElementsByTagName('li');
@@ -153,19 +143,23 @@ $('.gotobuy').click(function(){
             location.href = '../html/shopcar.html?data-id='+guid;
         })
    
-  $('.tocat').click(function(){
-            
-             alert('加入成功');
-            // $.ajax({
-            //     type: "post",
-            //     url: "../api/dingdan.php",//获取图片url
-            //     // async: true,
-            //     data : "id=" + guid+'&mobile='+ $mobile,
-            //     success: function(str) {
-            //         console.log(str);
-            //     }
-            // })
-            
+   
+  $('.tocat').on('click',function(){
+
+                var $qty = $('#buynum').val();
+                console.log(guid); 
+            if($mobile){
+            $.ajax({
+                type: "get",
+                url: "../api/xiangqing_gou.php",//获取图片url
+                // async: true,
+                data : "id=" + guid+'&user='+ $mobile+'&val='+$qty,
+                success: function(str) {
+                    console.log(str);
+                    alert('加入成功');
+                }
+            })
+            }
         })
             
     });

@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2019-05-18 17:39:02
 * @Last Modified by:   Marte
-* @Last Modified time: 2019-05-19 21:49:38
+* @Last Modified time: 2019-05-21 16:02:46
 */
 
 $(document).ready(function(){
@@ -20,22 +20,26 @@ $(document).ready(function(){
     }
     $('#jxbuy').click(function(){
             location.href='../html/liebiao.html';
+        
+
     })
+    console.log($mobile);
         $.ajax({
                 type: "get",
-                url: "../api/xiangqing.php",
-                async: true,
-                data:'id='+gid,
-                success: function(str) {
-                    // console.log(str);
-                    var arr = JSON.parse(str);
-                
-                    $res = arr.map(function(item) {
-                        return `<div class="order_content">
-                <ul class="order_lists">
+                url: "../api/shopping.php",
+                // async: true,
+                data:{
+                    account : $mobile,
+                },
+                success: function(data) {
+                    console.log(data);
+                    var data = JSON.parse(data);
+                $('.order_content').html(data.data.map(function(item){
+                        return `
+                <ul class="order_lists" data-id="${item.zid}">
                     <li class="list_chk">
-                        <input type="checkbox" id="checkbox_2" class="son_check">
-                        <label for="checkbox_2"></label>
+                        <input type="checkbox" id="checkbox_${item.zid}" class="son_check">
+                        <label for="checkbox_${item.zid}"></label>
                     </li>
                     <li class="list_con">
                         <div class="list_img"><a href="javascript:;"><img src="${item.url}" alt=""></a></div>
@@ -51,25 +55,110 @@ $(document).ready(function(){
                     <li class="list_amount">
                         <div class="amount_box">
                             <a href="javascript:;" class="reduce reSty">-</a>
-                            <input type="text" value="1" class="sum">
+                            <input type="text" value="${item.qty}" id="sum" class="sum">
                             <a href="javascript:;" class="plus">+</a>
                         </div>
                     </li>
                     <li class="list_sum">
-                        <p class="sum_price">￥${item.sale}</p>
+                        <p class="sum_price">￥${item.sale*item.qty}</p>
                     </li>
                     <li class="list_op">
                         <p class="del"><a href="javascript:;" class="delBtn">移除商品</a></p>
                     </li>
-                </ul>
-                </div>`;
-                    }).join('');
-                $('.cartBox').append($res);
-                $('.cartBox').html($res);
-                var $allCheckbox = $('input[type="checkbox"]'),     //全局的全部checkbox
+                </ul>`
+                     }))                
+    
+
+
+      
+         $('.order_lists').on('click','.plus',function(){
+
+                    var $id = $(this).parent().parent().parent().attr("data-id");
+                    // $(this).parent().parent().next().
+                    // console.log($id);
+                    $.ajax({
+                        type : 'get',
+                        url : '../api/shopcar.php',
+                        data : {
+                            key :'jia',
+                            dataid : $id
+                        },
+                        success : function(data){
+                            
+                            // var arr = JSON.parse(data);
+                            // console.log(arr);
+                            // $('#sum').val(arr.data);
+                            // let zhi = arr.quan[0].sale;
+                            // // console.log(zhi);
+                            // $('.sum_price').text(zhi*arr.data);
+
+                            totalMoney();
+
+                        }
+                    })
+                })
+
+                // 数量减
+               
+                $('.order_lists').on('click','.reduce',function(){
+                    var $id = $(this).parent().parent().parent().attr("data-id");
+
+                    $.ajax({
+                        type : 'get',
+                        url : '../api/shopcar.php',
+                        data : {
+                            key :'jian',
+                            dataid : $id
+                        },
+                        success : function(data){
+                            // var arr = JSON.parse(data);
+                            // if($('#sum').val()==1){
+                            //     alert("最低数量！");
+                            // }
+                            // $('#sum').val(arr.data);
+                            // let zhi = arr.quan[0].sale;
+                            // $('.sum_price').text(zhi*arr.data);
+                            totalMoney();
+                        }
+                    })
+
+                })
+                // 删除宝贝
+                $('.order_lists').on('click','.delBtn',function(){
+                    var res=confirm("您确认要删除该宝贝？");
+                    if(res){
+                        var $id = $(this).parent().parent().parent().attr("data-id");
+                        // console.log($id);
+                    $.ajax({
+                        type : 'get',
+                        url : '../api/shopcar.php',
+                        data : {
+                            key :'del',
+                            dataid : $id
+                        },
+                        success : function(data){
+                            // console.log(data);
+                            
+                        }
+                    })
+                    }else{
+
+                    }
+                    
+                })
+                // 全选
+                // $('.list_chk input').click(function() {
+                //     var istrue = $(this).prop('checked');
+                //     console.log(istrue)
+                //     $('.order_content input').prop('checked',istrue);
+                //     // $('.shuju_l1 input').prop('checked',istrue);
+
+                //     totalMoney();
+                // });
+            var $allCheckbox = $('input[type="checkbox"]'),     //全局的全部checkbox
                     $wholeChexbox = $('.whole_check'),
-                    $cartBox = $('.cartBox'),                       //每个商铺盒子
-                    $shopCheckbox = $('.shopChoice'),               //每个商铺的checkbox
+                    $cartBox = $('.order_content'),                       //每个商铺盒子
+                    // $shopCheckbox = $('.shopChoice'),               //每个商铺的checkbox
                     $sonCheckBox = $('.son_check');                 //每个商铺下的商品的checkbox
                 $allCheckbox.click(function () {
                     if ($(this).is(':checked')) {
@@ -91,8 +180,6 @@ $(document).ready(function(){
         }
         totalMoney();
     });
-
-
     $sonCheckBox.each(function () {
         $(this).click(function () {
             if ($(this).is(':checked')) {
@@ -113,48 +200,8 @@ $(document).ready(function(){
                 $wholeChexbox.prop("checked", false);
                 $wholeChexbox.next('label').removeClass('mark');
             }
-        })
-    })
-
-    //=======================================每个店铺checkbox与全选checkbox的关系/每个店铺与其下商品样式的变化===================================================
-
-    //店铺有一个未选中，全局全选按钮取消对勾，若店铺全选中，则全局全选按钮打对勾。
-    $shopCheckbox.each(function () {
-        $(this).click(function () {
-            if ($(this).is(':checked')) {
-                //判断：店铺全选中，则全局全选按钮打对勾。
-                var len = $shopCheckbox.length;
-                var num = 0;
-                $shopCheckbox.each(function () {
-                    if ($(this).is(':checked')) {
-                        num++;
-                    }
-                });
-                if (num == len) {
-                    $wholeChexbox.prop("checked", true);
-                    $wholeChexbox.next('label').addClass('mark');
-                }
-
-                //店铺下的checkbox选中状态
-                $(this).parents('.cartBox').find('.son_check').prop("checked", true);
-                $(this).parents('.cartBox').find('.son_check').next('label').addClass('mark');
-            } else {
-                //否则，全局全选按钮取消对勾
-                $wholeChexbox.prop("checked", false);
-                $wholeChexbox.next('label').removeClass('mark');
-
-                //店铺下的checkbox选中状态
-                $(this).parents('.cartBox').find('.son_check').prop("checked", false);
-                $(this).parents('.cartBox').find('.son_check').next('label').removeClass('mark');
-            }
-            totalMoney();
         });
     });
-
-
-    //========================================每个店铺checkbox与其下商品的checkbox的关系======================================================
-
-    //店铺$sonChecks有一个未选中，店铺全选按钮取消选中，若全都选中，则全选打对勾
     $cartBox.each(function () {
         var $this = $(this);
         var $sonChecks = $this.find('.son_check');
@@ -170,14 +217,14 @@ $(document).ready(function(){
                         }
                     });
                     if (num == len) {
-                        $(this).parents('.cartBox').find('.shopChoice').prop("checked", true);
-                        $(this).parents('.cartBox').find('.shopChoice').next('label').addClass('mark');
+                        $(this).parents('.order_content').find('.shopChoice').prop("checked", true);
+                        $(this).parents('.order_content').find('.shopChoice').next('label').addClass('mark');
                     }
 
                 } else {
                     //否则，店铺全选取消
-                    $(this).parents('.cartBox').find('.shopChoice').prop("checked", false);
-                    $(this).parents('.cartBox').find('.shopChoice').next('label').removeClass('mark');
+                    $(this).parents('.order_content').find('.shopChoice').prop("checked", false);
+                    $(this).parents('.order_content').find('.shopChoice').next('label').removeClass('mark');
                 }
                 totalMoney();
             });
@@ -185,8 +232,7 @@ $(document).ready(function(){
     });
 
 
-    //=================================================商品数量==============================================
-    var $plus = $('.plus'),
+          var $plus = $('.plus'),
         $reduce = $('.reduce'),
         $all_sum = $('.sum');
     $plus.click(function () {
@@ -275,7 +321,15 @@ $(document).ready(function(){
         var total_money = 0;
         var total_count = 0;
         var calBtn = $('.calBtn a');
-        $sonCheckBox.each(function () {
+        // $sonCheckBox.each(function () {
+        //     if ($(this).is(':checked')) {
+        //         var goods = parseInt($(this).parents('.order_lists').find('.sum_price').html().substring(1));
+        //         var num =  parseInt($(this).parents('.order_lists').find('.sum').val());
+        //         total_money += goods;
+        //         total_count += num;
+        //     }
+        // });
+           $sonCheckBox.each(function () {
             if ($(this).is(':checked')) {
                 var goods = parseInt($(this).parents('.order_lists').find('.sum_price').html().substring(1));
                 var num =  parseInt($(this).parents('.order_lists').find('.sum').val());
@@ -297,10 +351,9 @@ $(document).ready(function(){
                 calBtn.removeClass('btn_sty');
             }
         }
-    }
-                }   
-
-    })
-        
     
-});
+                }  
+
+                }
+            })
+    })
